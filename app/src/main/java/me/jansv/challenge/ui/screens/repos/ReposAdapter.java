@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import dagger.hilt.android.scopes.ActivityScoped;
 import me.jansv.challenge.R;
 import me.jansv.challenge.databinding.UserRepositoriesItemBinding;
+import me.jansv.challenge.model.Repos;
 import me.jansv.challenge.model.User;
 
 import java.util.List;
@@ -24,11 +25,10 @@ import javax.inject.Inject;
 public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.RepostHolder>{
 
     UserRepositoriesItemBinding binding;
-    private List<User> users;
+    private List<Repos> repos;
 
-
-    public ReposAdapter(List<User> users) {
-        this.users = users;
+    public ReposAdapter(List<Repos> repos) {
+        this.repos = repos;
     }
 
     @NonNull
@@ -40,21 +40,12 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.RepostHolder
 
     @Override
     public void onBindViewHolder(@NonNull RepostHolder repostHolder, int i) {
-        User item = users.get(i);
-        repostHolder.bind(users.get(i));
-        repostHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ReposActivity.class);
-                intent.putExtra(ReposActivity.USER_REPO, item.getLogin());
-                repostHolder.itemView.getContext().startActivity(intent);
-            }
-        });
+        repostHolder.bind(repos.get(i));
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return repos.size();
     }
 
     public class RepostHolder extends RecyclerView.ViewHolder {
@@ -68,13 +59,12 @@ public class ReposAdapter extends RecyclerView.Adapter<ReposAdapter.RepostHolder
             userName = binding.tvUsername;
             userRepositories = binding.tvUserRepositorie;
             userImage = binding.imgPerfilPhoto;
-
         }
 
-        private void bind(User user) {
-            userName.setText(user.getLogin());
-            userRepositories.setText(user.getHtmlUrl());
-            Glide.with(itemView.getContext()).load(user.getAvatarUrl()).into(userImage);
+        private void bind(Repos repos) {
+            userName.setText(repos.getOwner().getLogin());
+            userRepositories.setText(repos.getHtmlUrl());
+            Glide.with(itemView.getContext()).load(repos.getOwner().getAvatarUrl()).into(userImage);
         }
     }
 }

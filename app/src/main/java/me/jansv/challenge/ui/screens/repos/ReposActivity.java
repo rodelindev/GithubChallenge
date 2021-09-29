@@ -1,5 +1,6 @@
 package me.jansv.challenge.ui.screens.repos;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -14,12 +15,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import me.jansv.challenge.R;
 import me.jansv.challenge.api.GithubService;
 import me.jansv.challenge.databinding.ActivityReposBinding;
-import me.jansv.challenge.model.User;
-import me.jansv.challenge.model.UserList;
-import me.jansv.challenge.ui.screens.users.UsersAdapter;
+import me.jansv.challenge.model.Repos;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,37 +40,39 @@ public class ReposActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         repoList = binding.rvUserRepositorie;
 
+        String intent = getIntent().getStringExtra(USER_REPO);
+        Log.d("Intent", getIntent().getStringExtra(USER_REPO));
+        repositoryList(intent);
         setupViews();
-
-        String intent = getIntent().getExtras().getString(USER_REPO);
-        Log.d("Intent1", getIntent().getExtras().getString(USER_REPO));
-        repoList(intent);
-
     }
 
     private void setupViews() {
         repoList.setHasFixedSize(true);
-        repoList.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+        repoList.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
     }
 
-    public void repoList(String userLong) {
-        api.getRepoList(userLong).enqueue(new Callback<UserList>() {
+    public void repositoryList(String userLogin) {
+
+        api.getRepoList(userLogin).enqueue(new Callback<List<Repos>>() {
             @Override
-            public void onResponse(Call<UserList> call, Response<UserList> response) {
-                if (response.isSuccessful()) {
-                    showRepoList(response.body().getItems());
-                    Log.d("Repos", response.body().getItems().toString());
+            public void onResponse(Call<List<Repos>> call, Response<List<Repos>> response) {
+                if(response.isSuccessful()) {
+                    List<Repos> repos = response.body();
+
+                    for(int i = 0; i < repos.size(); i++) {
+                        showRepoList(repos);
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<UserList> call, Throwable t) {
-                Log.d("Repos1", t.getMessage());
+            public void onFailure(Call<List<Repos>> call, Throwable t) {
+                Log.d("Error", t.getMessage());
             }
         });
     }
 
-    public void showRepoList(List<User> repos) {
+    public void showRepoList(List<Repos> repos) {
         repoList.setAdapter(new ReposAdapter(repos));
         Log.d("Data", repos.toString());
     }

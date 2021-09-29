@@ -63,7 +63,7 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
         userList = binding.userList;
 
         setupViews();
-        scheduleForTitleChange();
+        //scheduleForTitleChange();
 
         /*userList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +118,7 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
 
     /*public void listedRepositories(View v){
         Intent intent = new Intent(v.getContext(), ReposActivity.class);
-        intent.putExtra("userRepo", "chalu");
+        intent.putExtra(ReposActivity.USER_REPO, "moyheen");
         startActivity(intent);
     }*/
 
@@ -153,7 +153,7 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
         subscriptions.add(d2);
     }
 
-    private void scheduleForTitleChange() {
+    /*private void scheduleForTitleChange() {
         final boolean delayTitleChange = getResources().getBoolean(R.bool.allowsDelayedTitleChange);
 
         if (delayTitleChange) {
@@ -166,5 +166,5 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
                 setTitle(R.string.users_title);
             }).start();
         }
-    }
+    }*/
 }
