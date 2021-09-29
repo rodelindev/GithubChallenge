@@ -65,12 +65,12 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
         setupViews();
         //scheduleForTitleChange();
 
-        /*userList.setOnClickListener(new View.OnClickListener() {
+        userList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listedRepositories(view);
             }
-        });*/
+        });
     }
 
     @Override
@@ -116,11 +116,11 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
         userList.setAdapter(new UsersAdapter(users));
     }
 
-    /*public void listedRepositories(View v){
+    public void listedRepositories(View v){
         Intent intent = new Intent(v.getContext(), ReposActivity.class);
         intent.putExtra(ReposActivity.USER_REPO, "moyheen");
         startActivity(intent);
-    }*/
+    }
 
     @Override
     public boolean isActive() {
