@@ -21,11 +21,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder>{
 
     UserItemBinding binding;
     private List<User> users;
-    //private onItemClickListener itemClickListener;
 
     public UsersAdapter(List<User> users) {
         this.users = users;
-        //this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -39,7 +37,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder>{
     public void onBindViewHolder(@NonNull Holder holder, int i) {
         holder.bind(users.get(i));
         holder.itemView.setOnClickListener(view -> {
-            //itemClickListener.onItemClick(users.get(i));
             Intent intent = new Intent(view.getContext(), ReposActivity.class);
             intent.putExtra(ReposActivity.USER_REPO, users.get(i).getLogin());
             holder.itemView.getContext().startActivity(intent);
@@ -50,10 +47,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder>{
     public int getItemCount() {
         return users.size();
     }
-
-    /*public interface onItemClickListener {
-        void onItemClick(User user);
-    }*/
 
     public class Holder extends RecyclerView.ViewHolder {
 
@@ -72,9 +65,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder>{
             userName.setText(user.getLogin());
             userState.setText("Lagos");
             Glide.with(itemView.getContext()).load(user.getAvatarUrl()).into(userImage);
-            /*itemView.setOnClickListener(view -> {
-                itemClickListener.onItemClick(user);
-            });*/
         }
     }
 }
