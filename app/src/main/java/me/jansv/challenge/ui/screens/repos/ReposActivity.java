@@ -15,6 +15,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import me.jansv.challenge.api.GithubService;
 import me.jansv.challenge.databinding.ActivityReposBinding;
 import me.jansv.challenge.model.Repos;
@@ -52,7 +58,7 @@ public class ReposActivity extends AppCompatActivity {
     }
 
     public void repositoryList(String userLogin) {
-
+        Call<List<Repos>> repos = api.getRepoList(userLogin);
         api.getRepoList(userLogin).enqueue(new Callback<List<Repos>>() {
             @Override
             public void onResponse(Call<List<Repos>> call, Response<List<Repos>> response) {

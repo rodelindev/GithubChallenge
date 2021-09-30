@@ -13,8 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="7dp"
-            android:paddingTop="7dp"
-            android:onClick="listedRepositories">
+            android:paddingTop="7dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_perfil_photo"

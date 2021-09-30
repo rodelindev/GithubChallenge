@@ -1,15 +1,10 @@
 package me.jansv.challenge.ui.screens.users;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +13,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import me.jansv.challenge.R;
 import me.jansv.challenge.databinding.UserItemBinding;
 import me.jansv.challenge.model.User;
 import me.jansv.challenge.ui.screens.repos.ReposActivity;
@@ -27,9 +21,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder>{
 
     UserItemBinding binding;
     private List<User> users;
+    //private onItemClickListener itemClickListener;
 
     public UsersAdapter(List<User> users) {
         this.users = users;
+        //this.itemClickListener = itemClickListener;
     }
 
     @NonNull
@@ -42,6 +38,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder>{
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int i) {
         holder.bind(users.get(i));
+        holder.itemView.setOnClickListener(view -> {
+            //itemClickListener.onItemClick(users.get(i));
+            Intent intent = new Intent(view.getContext(), ReposActivity.class);
+            intent.putExtra(ReposActivity.USER_REPO, users.get(i).getLogin());
+            holder.itemView.getContext().startActivity(intent);
+        });
     }
 
     @Override
@@ -49,20 +51,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder>{
         return users.size();
     }
 
-    /*holder.itemView.setOnClickListener(new View.OnClickListener() {
-    User item = users.get(i);
-        @Override
-        public void onClick(View view) {
-            Context context = view.getContext();
-            Intent intent = new Intent(context, ReposActivity.class);
-            //intent.putExtra(ReposActivity.USER_REPO, item.getLogin());
-            context.startActivity(intent);
-        }
-    });*/
-
-    public interface onItemClickListener {
+    /*public interface onItemClickListener {
         void onItemClick(User user);
-    }
+    }*/
 
     public class Holder extends RecyclerView.ViewHolder {
 
@@ -81,15 +72,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder>{
             userName.setText(user.getLogin());
             userState.setText("Lagos");
             Glide.with(itemView.getContext()).load(user.getAvatarUrl()).into(userImage);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, ReposActivity.class);
-                    intent.putExtra(ReposActivity.USER_REPO, user.getLogin());
-                    context.startActivity(intent);
-                }
-            });
+            /*itemView.setOnClickListener(view -> {
+                itemClickListener.onItemClick(user);
+            });*/
         }
     }
 }

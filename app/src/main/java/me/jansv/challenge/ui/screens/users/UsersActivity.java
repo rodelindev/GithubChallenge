@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -36,11 +35,11 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
     @Inject
     GithubService api;
 
-    @Inject
+    /* @Inject
     NetworkManager connectivity; // optional component
 
     @Inject
-    SchedulerProviders schedulers; // optional component
+    SchedulerProviders schedulers; // optional component*/
 
     @Inject
     UsersPresenter mPresenter;
@@ -64,13 +63,6 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
 
         setupViews();
         //scheduleForTitleChange();
-
-        userList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listedRepositories(view);
-            }
-        });
     }
 
     @Override
@@ -80,8 +72,8 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
         mPresenter.bind(this);
 
         // this call is totally optional, you can without any damage comment it and uncomment the below one
-        fetchUsersWhenReady();
-        //mPresenter.fetchUserList();
+        //fetchUsersWhenReady();
+        mPresenter.fetchUserList();
     }
 
     @Override
@@ -116,18 +108,21 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
         userList.setAdapter(new UsersAdapter(users));
     }
 
-    public void listedRepositories(View v){
-        Intent intent = new Intent(v.getContext(), ReposActivity.class);
-        intent.putExtra(ReposActivity.USER_REPO, "moyheen");
-        startActivity(intent);
-    }
-
     @Override
     public boolean isActive() {
         return mIsActive;
     }
 
-    private void fetchUsersWhenReady() {
+    /*
+    Error al pasar los putExtra entre activitys
+    public void listedRepositories(View v){
+
+        Intent intent = new Intent(v.getContext(), ReposActivity.class);
+        intent.putExtra(ReposActivity.USER_REPO, "moyheen");
+        startActivity(intent);
+    }*/
+
+    /*private void fetchUsersWhenReady() {
         subscriptions.clear();
         Observable<Boolean> isConnected = connectivity
                 .connectivityOn(this)
@@ -151,7 +146,7 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
 
         subscriptions.add(d1);
         subscriptions.add(d2);
-    }
+    }*/
 
     /*private void scheduleForTitleChange() {
         final boolean delayTitleChange = getResources().getBoolean(R.bool.allowsDelayedTitleChange);
