@@ -48,7 +48,7 @@ public class UsersPresenter implements UsersContract.Presenter {
     public void fetchUserList() {
         final String filter = "language:java location:lagos";
 
-        /*api.getUserList(filter).enqueue(new Callback<UserList>() {
+        api.getUserList(filter).enqueue(new Callback<UserList>() {
             @Override
             public void onResponse(Call<UserList> call, Response<UserList> response) {
                 if(!mView.isActive())
@@ -66,33 +66,6 @@ public class UsersPresenter implements UsersContract.Presenter {
                     mView.showNetworkErrorMessage();
                 }
             }
-        });*/
-
-        /*Observable<UserList> userList = api.getUserList(filter);
-
-        userList.subscribe(new Observer<UserList>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(@NonNull UserList userList) {
-                for (User user: userList.getItems()) {
-                    mView.showUserList(userList.getItems());
-                }
-
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d("Complete", "El pedido esta completo");
-            }
-        });*/
+        });
     }
 }
