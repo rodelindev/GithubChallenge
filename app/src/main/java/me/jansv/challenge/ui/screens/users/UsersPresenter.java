@@ -3,13 +3,13 @@ package me.jansv.challenge.ui.screens.users;
 import android.util.Log;
 
 import java.util.List;
+import java.util.Observable;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.scopes.ActivityScoped;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Function;
@@ -48,7 +48,13 @@ public class UsersPresenter implements UsersContract.Presenter {
     public void fetchUserList() {
         final String filter = "language:java location:lagos";
 
-        api.getUserList(filter).enqueue(new Callback<UserList>() {
+        api.getUserList(filter)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    mView.showUserList(response.getItems());
+                });
+    }
+    /*api.getUserList(filter).enqueue(new Callback<UserList>() {
             @Override
             public void onResponse(Call<UserList> call, Response<UserList> response) {
                 if(!mView.isActive())
@@ -66,6 +72,5 @@ public class UsersPresenter implements UsersContract.Presenter {
                     mView.showNetworkErrorMessage();
                 }
             }
-        });
-    }
+        });*/
 }

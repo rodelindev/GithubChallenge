@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import me.jansv.challenge.api.GithubService;
 import me.jansv.challenge.databinding.ActivityReposBinding;
@@ -58,8 +59,19 @@ public class ReposActivity extends AppCompatActivity {
     }
 
     public void repositoryList(String userLogin) {
-        Call<List<Repos>> repos = api.getRepoList(userLogin);
-        api.getRepoList(userLogin).enqueue(new Callback<List<Repos>>() {
+        api.getRepoList(userLogin)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    showRepoList(response);
+                });
+    }
+
+    public void showRepoList(List<Repos> repos) {
+        repoList.setAdapter(new ReposAdapter(repos));
+        Log.d("Data", repos.toString());
+    }
+
+    /*api.getRepoList(userLogin).enqueue(new Callback<List<Repos>>() {
             @Override
             public void onResponse(Call<List<Repos>> call, Response<List<Repos>> response) {
                 if(response.isSuccessful()) {
@@ -75,11 +87,5 @@ public class ReposActivity extends AppCompatActivity {
             public void onFailure(Call<List<Repos>> call, Throwable t) {
                 Log.d("Error", t.getMessage());
             }
-        });
-    }
-
-    public void showRepoList(List<Repos> repos) {
-        repoList.setAdapter(new ReposAdapter(repos));
-        Log.d("Data", repos.toString());
-    }
+        });*/
 }
