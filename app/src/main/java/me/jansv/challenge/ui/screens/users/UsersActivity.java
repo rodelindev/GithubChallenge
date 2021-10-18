@@ -160,7 +160,7 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
                     ex.printStackTrace();
                 }
                 runOnUiThread(() ->{
-                    this.setTitle(R.string.users_title);
+                    setTitle(R.string.users_title);
                 });
             }).start();
         }
