@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -62,7 +63,7 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
         userList = binding.userList;
 
         setupViews();
-        //scheduleForTitleChange();
+        scheduleForTitleChange();
     }
 
     @Override
@@ -148,7 +149,7 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
         subscriptions.add(d2);
     }*/
 
-    /*private void scheduleForTitleChange() {
+    private void scheduleForTitleChange() {
         final boolean delayTitleChange = getResources().getBoolean(R.bool.allowsDelayedTitleChange);
 
         if (delayTitleChange) {
@@ -158,8 +159,10 @@ public class UsersActivity extends AppCompatActivity implements UsersContract.Vi
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                setTitle(R.string.users_title);
+                runOnUiThread(() ->{
+                    this.setTitle(R.string.users_title);
+                });
             }).start();
         }
-    }*/
+    }
 }
